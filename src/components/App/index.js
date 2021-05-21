@@ -2,6 +2,8 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import GlobalStyles from '../../globalStyles';
 import { theme } from '../../themes/mainTheme';
+import Heading from '../atoms/Heading';
+import Paragraph from '../atoms/Paragraph';
 import { StyledApp, StyledHeader } from './StyledApp';
 
 function App() {
@@ -10,7 +12,8 @@ function App() {
       <GlobalStyles />
       <StyledApp className="app">
         <StyledHeader className="app__header">
-          <h1 className="app__heading">Lista zadań</h1>
+          <Heading headingType="h1">Lista zadań</Heading>
+          <Paragraph>;akdjfndkjs</Paragraph>
         </StyledHeader>
       </StyledApp>
     </ThemeProvider>
