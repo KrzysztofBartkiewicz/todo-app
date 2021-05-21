@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const StyledTaskCard = styled.div`
   padding: 1rem;
@@ -7,4 +7,11 @@ export const StyledTaskCard = styled.div`
   background-color: ${(props) => props.theme.colors.bgWhite};
   border: 1px solid ${(props) => props.theme.colors.primary};
   border-radius: 5px;
+  transition: box-shadow 0.3s ease;
+
+  ${(props) =>
+    props.isEditable &&
+    css`
+      box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.6);
+    `}
 `;

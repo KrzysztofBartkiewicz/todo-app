@@ -5,9 +5,9 @@ import { StyledMain } from './StyledMain';
 const Main = () => {
   return (
     <StyledMain>
-      <TaskBlock title="Do zrobienia" tasksNumber={2} />
-      <TaskBlock title="W trakcie" tasksNumber={2} />
-      <TaskBlock title="Zrobiobne" tasksNumber={2} />
+      <TaskBlock variant="todo" title="Do zrobienia" />
+      <TaskBlock variant="inprogress" title="W trakcie" />
+      <TaskBlock variant="finished" title="Zrobiobne" />
     </StyledMain>
   );
 };

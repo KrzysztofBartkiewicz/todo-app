@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import GlobalStyles from '../../globalStyles';
 import Heading from '../atoms/Heading';
 import Header from '../molecules/Header';
@@ -9,11 +9,32 @@ import { ThemeProvider } from 'styled-components';
 import { StyledApp } from './StyledApp';
 
 const App = () => {
+  const appRef = useRef(null);
+
+  const [tasks, setTasks] = useState([]);
+
+  const addTask = (task) => {
+    setTasks((prev) => [...prev, task]);
+  };
+
+  // useEffect(() => {
+  //   const handleClick = () => {
+
+  //   }
+
+  //   document.addEventListener('mousedown', handleClick)
+  // }, [])
+
   return (
-    <AppContext.Provider>
+    <AppContext.Provider
+      value={{
+        tasks,
+        addTask,
+      }}
+    >
       <ThemeProvider theme={theme}>
         <GlobalStyles />
-        <StyledApp>
+        <StyledApp ref={appRef}>
           <Header>
             <Heading headingType="h1">Lista zadań</Heading>
           </Header>
