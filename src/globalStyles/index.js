@@ -1,3 +1,7 @@
+import { createGlobalStyle } from 'styled-components';
+
+const GlobalStyles = createGlobalStyle`
+
 * {
   margin: 0;
   padding: 0;
@@ -10,6 +14,7 @@ html {
 
 body {
   font-family: 'Montserrat', sans-serif;
+  background-color: ${(props) => props.theme.colors.bgPrimary};
 }
 
 button,
@@ -26,3 +31,6 @@ button {
 ul {
   list-style: none;
 }
+`;
+
+export default GlobalStyles;
