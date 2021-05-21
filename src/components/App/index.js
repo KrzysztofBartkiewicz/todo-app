@@ -1,10 +1,11 @@
 import React from 'react';
-import { ThemeProvider } from 'styled-components';
 import GlobalStyles from '../../globalStyles';
-import { theme } from '../../themes/mainTheme';
+import Button from '../atoms/Button';
 import Heading from '../atoms/Heading';
-import Paragraph from '../atoms/Paragraph';
+import { theme } from '../../themes/mainTheme';
+import { ThemeProvider } from 'styled-components';
 import { StyledApp, StyledHeader } from './StyledApp';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
       <StyledApp className="app">
         <StyledHeader className="app__header">
           <Heading headingType="h1">Lista zadań</Heading>
-          <Paragraph>;akdjfndkjs</Paragraph>
+          <Button faIcon={faPlus}>Dodaj</Button>
         </StyledHeader>
       </StyledApp>
     </ThemeProvider>
