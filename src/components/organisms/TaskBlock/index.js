@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Heading from '../../atoms/Heading';
 import Button from '../../atoms/Button';
-import TaskCard from '../../molecules/TaskCard';
+import TasksList from '../../molecules/TasksList';
 import {
   StyledTaskBlock,
   StyledTaskBlockHeader,
@@ -21,7 +21,7 @@ const TaskBlock = ({ title, variant }) => {
         <StyledTaskBlockParagraph>{`(${2})`}</StyledTaskBlockParagraph>
         <Button text="Dodaj" faIcon={faPlus} />
       </StyledTaskBlockHeader>
-      <TaskCard isEditable content title variant={variant} />
+      <TasksList tasksArray={tasks} listVariant={variant} />
     </StyledTaskBlock>
   );
 };

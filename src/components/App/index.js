@@ -11,10 +11,71 @@ import { StyledApp } from './StyledApp';
 const App = () => {
   const appRef = useRef(null);
 
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState([
+    {
+      id: 1,
+      title: 'adc',
+      content: 'dsfaasdf',
+      isEditable: true,
+      variant: 'inprogress',
+    },
+    {
+      id: 2,
+      title: 'adc',
+      content: 'dsfaasdf',
+      isEditable: false,
+      variant: 'inprogress',
+    },
+    {
+      id: 3,
+      title: 'adc',
+      content: 'dsfaasdf',
+      isEditable: true,
+      variant: 'todo',
+    },
+    {
+      id: 4,
+      title: 'adc',
+      content: 'dsfaasdf',
+      isEditable: false,
+      variant: 'todo',
+    },
+    {
+      id: 5,
+      title: 'adc',
+      content: 'dsfaasdf',
+      isEditable: true,
+      variant: 'finished',
+    },
+    {
+      id: 6,
+      title: 'adc',
+      content: 'dsfaasdf',
+      isEditable: false,
+      variant: 'finished',
+    },
+  ]);
 
   const addTask = (task) => {
     setTasks((prev) => [...prev, task]);
+  };
+
+  const handleCardClick = (id) => {
+    const mappedTasks = tasks.map((task) => {
+      if (task.id === id) {
+        return {
+          ...task,
+          isEditable: true,
+        };
+      } else {
+        return {
+          ...task,
+          isEditable: false,
+        };
+      }
+    });
+
+    setTasks([...mappedTasks]);
   };
 
   // useEffect(() => {
@@ -30,6 +91,7 @@ const App = () => {
       value={{
         tasks,
         addTask,
+        handleCardClick,
       }}
     >
       <ThemeProvider theme={theme}>
