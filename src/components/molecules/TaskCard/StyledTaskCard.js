@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled, { css } from 'styled-components';
 
 export const StyledTaskCard = styled.form`
@@ -15,6 +16,24 @@ export const StyledTaskCard = styled.form`
     css`
       box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.6);
     `}
+`;
+
+export const StyledHeadWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const StyledTaskIcon = styled(FontAwesomeIcon)`
+  color: ${({ theme, variant }) => {
+    if (variant === 'inprogress') {
+      return `${theme.colors.icon.pending};`;
+    }
+    if (variant === 'finished') {
+      return `${theme.colors.icon.finish};`;
+    }
+    return `${theme.colors.icon.default};`;
+  }};
 `;
 
 export const StyledFieldset = styled.fieldset`

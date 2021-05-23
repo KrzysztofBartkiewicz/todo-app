@@ -5,6 +5,12 @@ export const theme = {
     bgPrimary: '#52489c',
     bgSecondary: '#ebebeb',
     bgWhite: '#fff',
+
+    icon: {
+      default: '#bbbbbb',
+      pending: '#f9b208',
+      finish: '#54e346',
+    },
   },
 
   fontSizes: {

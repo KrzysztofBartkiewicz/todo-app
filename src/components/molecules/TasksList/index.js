@@ -6,10 +6,10 @@ const Taskslist = ({ tasksArray, listVariant }) => {
     <ul>
       {tasksArray
         .filter(({ variant }) => variant === listVariant)
-        .map(({ isEditable, title, content, id }) => (
+        .map(({ title, content, id, variant }) => (
           <li key={id}>
             <TaskCard
-              isEditable={isEditable}
+              variant={variant}
               title={title}
               content={content}
               id={id}
