@@ -1,5 +1,5 @@
-import { faSave, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import React, { useContext } from 'react';
+import { faSave, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import AppContext from '../../../context';
 import Button from '../../atoms/Button';
 import Input from '../../atoms/Input';
@@ -13,7 +13,7 @@ import {
 const TaskCard = ({ title, content, id }) => {
   const context = useContext(AppContext);
   const {
-    handleClick,
+    handleTaskClick,
     activeTaskID,
     handleTitleChange,
     handleContentChange,
@@ -25,7 +25,8 @@ const TaskCard = ({ title, content, id }) => {
 
   return (
     <StyledTaskCard
-      onClick={(e) => handleClick(e, id)}
+      id={id}
+      onClick={(e) => handleTaskClick(e, id)}
       isEditable={isTaskActive}
     >
       <StyledFieldset disabled={!isTaskActive}>
@@ -52,7 +53,10 @@ const TaskCard = ({ title, content, id }) => {
           />
           <Button
             small
-            onClickFn={() => handleDiscardTask(id)}
+            onClickFn={(e) => {
+              e.stopPropagation();
+              handleDiscardTask(id);
+            }}
             faIcon={faTrashAlt}
             text="Odrzuć"
           >

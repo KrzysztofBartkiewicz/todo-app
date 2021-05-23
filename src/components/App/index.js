@@ -11,19 +11,47 @@ import { StyledApp } from './StyledApp';
 const App = () => {
   const [tasks, setTasks] = useState([]);
   const [activeTaskID, setActiveTaskID] = useState(null);
-  const [isAddingDisabled, setIsAddingDisabled] = useState(false);
+  const [isEditModeOn, setIsEditModeOn] = useState(false);
+  const [isNewTaskAdding, setIsNewTaskAdding] = useState(false);
+
+  useEffect(() => {
+    const setNewTaskActive = () => {
+      if (tasks[0] && isNewTaskAdding) {
+        setActiveTaskID(tasks[0].id);
+      }
+    };
+    setNewTaskActive();
+  }, [isNewTaskAdding]);
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleGlobalClick);
+    return () => document.removeEventListener('mousedown', handleGlobalClick);
+  });
+
+  const handleGlobalClick = (e) => {
+    if (activeTaskID) {
+      const isClickedOutsideActiveTask = e.path.every(
+        (node) => node.id !== activeTaskID.toString()
+      );
+      if (isEditModeOn && isClickedOutsideActiveTask) {
+        handleSaveTask(activeTaskID);
+      }
+    }
+  };
 
   const addTask = (variant) => {
-    // if (!isAddingDisabled) {
-    setIsAddingDisabled(true);
-    const newTask = {
-      id: Math.random(),
-      title: '',
-      content: '',
-      variant,
-    };
-    setTasks((prev) => [newTask, ...prev]);
-    // }
+    if (!isEditModeOn) {
+      console.log(activeTaskID);
+      setIsEditModeOn(true);
+      setIsNewTaskAdding(true);
+      const newTask = {
+        id: Math.random(),
+        title: '',
+        content: '',
+        variant,
+      };
+      setTasks((prev) => [newTask, ...prev]);
+    }
   };
 
   const handleSaveTask = (taskId) => {
@@ -33,16 +61,20 @@ const App = () => {
       return;
     }
     setActiveTaskID(null);
+    setIsNewTaskAdding(false);
+    setIsEditModeOn(false);
   };
 
   const handleDiscardTask = (taskId) => {
     const filterdTaks = tasks.filter((task) => task.id !== taskId);
     setTasks([...filterdTaks]);
+    setIsEditModeOn(false);
+    setIsNewTaskAdding(false);
   };
 
-  const handleClick = (e, taskId) => {
-    e.stopPropagation();
+  const handleTaskClick = (e, taskId) => {
     setActiveTaskID(taskId);
+    setIsEditModeOn(true);
   };
 
   const handleTitleChange = (e, taskId) => {
@@ -83,7 +115,7 @@ const App = () => {
         handleTitleChange,
         handleContentChange,
         addTask,
-        handleClick,
+        handleTaskClick,
       }}
     >
       <ThemeProvider theme={theme}>
