@@ -50,6 +50,10 @@ const TaskCard = ({ title, content, id, variant }) => {
       id={id}
       onClick={(e) => handleTaskClick(e, id)}
       isEditable={isTaskActive}
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSaveTask(id);
+      }}
     >
       <StyledFieldset disabled={!isTaskActive}>
         <StyledHeadWrapper>

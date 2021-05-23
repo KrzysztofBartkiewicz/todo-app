@@ -9,7 +9,13 @@ import { ThemeProvider } from 'styled-components';
 import { StyledApp } from './StyledApp';
 
 const App = () => {
-  const [tasks, setTasks] = useState([]);
+  const getTasksFromLS = () =>
+    JSON.parse(localStorage.getItem('toDoListTasks')) || [];
+
+  const saveTaskInLS = () =>
+    localStorage.setItem('toDoListTasks', JSON.stringify(tasks));
+
+  const [tasks, setTasks] = useState(getTasksFromLS());
   const [activeTaskID, setActiveTaskID] = useState(null);
   const [isEditModeOn, setIsEditModeOn] = useState(false);
   const [isNewTaskAdding, setIsNewTaskAdding] = useState(false);
@@ -27,6 +33,10 @@ const App = () => {
     document.addEventListener('mousedown', handleGlobalClick);
     return () => document.removeEventListener('mousedown', handleGlobalClick);
   });
+
+  useEffect(() => {
+    localStorage.setItem('toDoListTasks', JSON.stringify(tasks));
+  }, [tasks]);
 
   const handleGlobalClick = (e) => {
     if (activeTaskID) {
