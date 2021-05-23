@@ -51,7 +51,6 @@ const App = () => {
 
   const addTask = (variant) => {
     if (!isEditModeOn) {
-      console.log(activeTaskID);
       setIsEditModeOn(true);
       setIsNewTaskAdding(true);
       const newTask = {
