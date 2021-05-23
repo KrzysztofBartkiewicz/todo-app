@@ -20,3 +20,14 @@ export const StyledTaskCard = styled.form`
 export const StyledFieldset = styled.fieldset`
   border: none;
 `;
+
+export const StyledButtonWrapper = styled.div`
+  display: none;
+  justify-content: flex-end;
+
+  ${(props) =>
+    props.isEditable &&
+    css`
+      display: flex;
+    `}
+`;

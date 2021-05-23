@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import GlobalStyles from '../../globalStyles';
 import Heading from '../atoms/Heading';
 import Header from '../molecules/Header';
@@ -9,94 +9,86 @@ import { ThemeProvider } from 'styled-components';
 import { StyledApp } from './StyledApp';
 
 const App = () => {
-  const appRef = useRef(null);
+  const [tasks, setTasks] = useState([]);
+  const [activeTaskID, setActiveTaskID] = useState(null);
+  const [isAddingDisabled, setIsAddingDisabled] = useState(false);
 
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: 'adc',
-      content: 'dsfaasdf',
-      isEditable: true,
-      variant: 'inprogress',
-    },
-    {
-      id: 2,
-      title: 'adc',
-      content: 'dsfaasdf',
-      isEditable: false,
-      variant: 'inprogress',
-    },
-    {
-      id: 3,
-      title: 'adc',
-      content: 'dsfaasdf',
-      isEditable: true,
-      variant: 'todo',
-    },
-    {
-      id: 4,
-      title: 'adc',
-      content: 'dsfaasdf',
-      isEditable: false,
-      variant: 'todo',
-    },
-    {
-      id: 5,
-      title: 'adc',
-      content: 'dsfaasdf',
-      isEditable: true,
-      variant: 'finished',
-    },
-    {
-      id: 6,
-      title: 'adc',
-      content: 'dsfaasdf',
-      isEditable: false,
-      variant: 'finished',
-    },
-  ]);
-
-  const addTask = (task) => {
-    setTasks((prev) => [...prev, task]);
+  const addTask = (variant) => {
+    // if (!isAddingDisabled) {
+    setIsAddingDisabled(true);
+    const newTask = {
+      id: Math.random(),
+      title: '',
+      content: '',
+      variant,
+    };
+    setTasks((prev) => [newTask, ...prev]);
+    // }
   };
 
-  const handleCardClick = (id) => {
-    const mappedTasks = tasks.map((task) => {
-      if (task.id === id) {
-        return {
-          ...task,
-          isEditable: true,
-        };
-      } else {
-        return {
-          ...task,
-          isEditable: false,
-        };
-      }
-    });
+  const handleSaveTask = (taskId) => {
+    const activeTask = tasks.find((task) => task.id === taskId);
+    if (activeTask.title.length === 0) {
+      alert('Tytuł nie może być pusty');
+      return;
+    }
+    setActiveTaskID(null);
+  };
 
+  const handleDiscardTask = (taskId) => {
+    const filterdTaks = tasks.filter((task) => task.id !== taskId);
+    setTasks([...filterdTaks]);
+  };
+
+  const handleClick = (e, taskId) => {
+    e.stopPropagation();
+    setActiveTaskID(taskId);
+  };
+
+  const handleTitleChange = (e, taskId) => {
+    const mappedTasks = tasks.map((task) =>
+      task.id === taskId
+        ? {
+            ...task,
+            title: e.target.value,
+          }
+        : {
+            ...task,
+          }
+    );
     setTasks([...mappedTasks]);
   };
 
-  // useEffect(() => {
-  //   const handleClick = () => {
-
-  //   }
-
-  //   document.addEventListener('mousedown', handleClick)
-  // }, [])
+  const handleContentChange = (e, taskId) => {
+    const mappedTasks = tasks.map((task) =>
+      task.id === taskId
+        ? {
+            ...task,
+            content: e.target.value,
+          }
+        : {
+            ...task,
+          }
+    );
+    setTasks([...mappedTasks]);
+  };
 
   return (
     <AppContext.Provider
       value={{
         tasks,
+        activeTaskID,
+        handleDiscardTask,
+        handleSaveTask,
+        handleTitleChange,
+        handleContentChange,
         addTask,
-        handleCardClick,
+        handleClick,
       }}
     >
       <ThemeProvider theme={theme}>
         <GlobalStyles />
-        <StyledApp ref={appRef}>
+        <StyledApp>
           <Header>
             <Heading headingType="h1">Lista zadań</Heading>
           </Header>

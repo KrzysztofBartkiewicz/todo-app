@@ -14,12 +14,21 @@ const TaskBlock = ({ title, variant }) => {
   const context = useContext(AppContext);
   const { tasks, addTask } = context;
 
+  const numberOfTasks = tasks.reduce(
+    (number, task) => (task.variant === variant ? number + 1 : number),
+    0
+  );
+
   return (
     <StyledTaskBlock>
       <StyledTaskBlockHeader>
         <Heading headingType="h2">{title}</Heading>
-        <StyledTaskBlockParagraph>{`(${2})`}</StyledTaskBlockParagraph>
-        <Button text="Dodaj" faIcon={faPlus} />
+        <StyledTaskBlockParagraph>{`(${numberOfTasks})`}</StyledTaskBlockParagraph>
+        <Button
+          text="Dodaj"
+          faIcon={faPlus}
+          onClickFn={() => addTask(variant)}
+        />
       </StyledTaskBlockHeader>
       <TasksList tasksArray={tasks} listVariant={variant} />
     </StyledTaskBlock>

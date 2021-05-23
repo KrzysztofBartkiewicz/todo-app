@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyledTextArea } from './StyledTextArea';
 
-const TextArea = ({ value, isEditable, placeholder }) => {
+const TextArea = ({ value, placeholder, onChangeFn }) => {
   return (
     <StyledTextArea
       value={value}
-      readOnly={!isEditable}
+      onChange={onChangeFn}
       placeholder={placeholder}
     />
   );
